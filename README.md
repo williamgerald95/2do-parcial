@@ -1,0 +1,102 @@
+# 2do-parcial
+<xsl:stylesheet version="1.0" xmlns:xalan="http://xml.apache.org/xalan" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+		<xsl:template match="/">
+			<xsl:for-each select="descendant::valor">
+				<xsl:variable name="instancia"><xsl:value-of select="@encendido"/></xsl:variable>
+				<xsl:if test="$instancia='1'"><p>
+					Nombre: <xsl:value-of select="@nbvalor"/>
+					Tipo: Encendido
+					Posicion: <xsl:value-of select="position()"/>
+					Frecuencia: <xsl:value-of select="@f"/>
+					Probabilidad: <xsl:value-of select="@f"/> / <xsl:value-of select="../../@f"/> =
+					Total: <xsl:value-of select="@f div ../../@f"/><br/> </p>  
+				</xsl:if>
+			</xsl:for-each>
+	
+
+			<p>Probabilidad final Forma B|A:</p>
+			<xsl:for-each select="descendant::valor">
+				<xsl:variable name="instancias"><xsl:value-of select="@encendido"/></xsl:variable>
+				<xsl:if test="$instancias='1'"><p>
+					<xsl:variable name="probadatos">
+						<xsl:value-of select="@f div ../../@f"/>
+					</xsl:variable>  
+					((<xsl:value-of select="@f"/> / <xsl:value-of select="../../@f"/>) * (<xsl:value-of select="../../@f"/> / <xsl:value-of select="../../../../@n"/>))=
+					<xsl:value-of select="($probadatos) * (../../@f div ../../../../@n)"/></p>
+				</xsl:if>
+			</xsl:for-each>
+			R = 
+			<xsl:for-each select="descendant::valor">
+				<xsl:variable name="instancias"><xsl:value-of select="@encendido"/></xsl:variable>
+				<xsl:if test="$instancias='1'">
+					<xsl:variable name="probadatos">
+						<xsl:value-of select="@f div ../../@f"/>
+					</xsl:variable>  +
+					<xsl:value-of select="($probadatos) * (../../@f div ../../../../@n)"/>  
+				</xsl:if>
+			</xsl:for-each>
+	
+
+			<p>Probabilidad final Forma A|B:</p>
+			<xsl:for-each select="descendant::valor">
+				<xsl:variable name="instancia"><xsl:value-of select="@encendido"/></xsl:variable>
+				<xsl:if test="$instancia='1'"><p>
+					<xsl:variable name="probadatos">
+						<xsl:value-of select="@f div ../../@f"/>
+					</xsl:variable>
+					Formula: ((<xsl:value-of select="../../@f"/> / <xsl:value-of select="../../../../@n"/>) * ((<xsl:value-of select="@f"/> / <xsl:value-of select="../../@f"/>) * (<xsl:value-of select="../../@f"/> / <xsl:value-of select="../../../../@n"/>)) / (<xsl:value-of select="@f"/> / <xsl:value-of select="../../@f"/>)
+					<p>
+						Resultado:
+						<xsl:variable name="PA">
+							<xsl:value-of select="../../@f div ../../../../@n"/>
+						</xsl:variable>
+	
+
+						<xsl:variable name="PBA">
+							<xsl:value-of select="($probadatos) * (../../@f div ../../../../@n)"/>
+						</xsl:variable>
+	
+
+						<xsl:variable name="PB">
+							<xsl:value-of select="@f div ../../@f"/>
+						</xsl:variable>
+	
+
+						<xsl:value-of select="(($PA) * ($PBA)) div ($PB)"/> 
+	
+
+					</p>
+				</p>
+			</xsl:if>
+		</xsl:for-each>
+	
+
+		R = 
+		<xsl:for-each select="descendant::valor">
+			<xsl:variable name="instancias"><xsl:value-of select="@encendido"/></xsl:variable>
+			<xsl:if test="$instancias='1'">
+				<xsl:variable name="probadatos">
+					<xsl:value-of select="@f div ../../@f"/>
+				</xsl:variable>  +
+				<xsl:variable name="PA">
+					<xsl:value-of select="../../@f div ../../../../@n"/>
+				</xsl:variable>
+	
+
+				<xsl:variable name="PBA">
+					<xsl:value-of select="($probadatos) * (../../@f div ../../../../@n)"/>
+				</xsl:variable>
+	
+
+				<xsl:variable name="PB">
+					<xsl:value-of select="@f div ../../@f"/>
+				</xsl:variable>
+	
+
+				<xsl:value-of select="(($PA) * ($PBA)) div ($PB)"/>  
+			</xsl:if>
+		</xsl:for-each>
+	
+
+	</xsl:template>
+  </xsl:stylesheet>
