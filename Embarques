@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- saved from url=(0141)https://trello-attachments.s3.amazonaws.com/59e3f1acab30c687f545789d/5afa0accbc28adc7773a74da/7d70f7ad2edc562a39413f1df819be95/Embarques.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>
+
+	<h2>Valoracion de Embarques</h2>
+
+
+	<p id="demo">embarque no rentable</p>
+	<p id="nombre">Inteligencia de Negocios</p>
+
+	<script>
+// dias de entrega de los embarques
+var entrega = 3;
+//  dias de espera para la entrega (horizonte de planeaciom)   
+var ho = 3;
+// comparacion de los datos
+if (ho>entrega){
+		// si los dias de entrega son menores a los dias de planeacion entonces el embarque es rentable
+		document.getElementById("demo").innerHTML = "embarque rentable";
+		
+	}
+	else {
+	   // en caso contrario no es rentable ya que el embarque llegara en una situaci�n critica
+	   document.getElementById("demo").innerHTML = "embarque no rentable";
+	}
+	
+	document.getElementById("nombre").innerHTML = "Inteligencia de Negocios";
+</script>
+
+
+</body></html>
