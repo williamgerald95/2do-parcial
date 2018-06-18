@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="/">
+		<xsl:for-each select="*">CREATE DATABASE 
+			
+			
+			<xsl:value-of select="name()"/>
+			;
+			
+			
+			<br/>
+			<!--Borrar tablas-->
+			<xsl:for-each select="*">
+				DROP TABLE 
+				
+				<xsl:value-of select="name()"/>
+				;
+				
+				<br/></xsl:for-each>
+			<!--Crear tablas-->
+			<xsl:for-each select="*">
+				CREATE TABLE 
+				
+				<xsl:value-of select="name()"/>
+				(
+				
+				<xsl:for-each select="*">
+					<xsl:value-of select="name()"/>
+					<xsl:choose>
+						<xsl:when test="(.)='entero'"> INT </xsl:when>
+						<xsl:when test="(.)='texto'"> TEXT </xsl:when>
+						<xsl:when test="(.)='decimal'"> DOUBLE </xsl:when>
+						<xsl:when test="(.)='logico'"> BOOLEAN </xsl:when>
+						<xsl:when test="(.)='fechatiempo'"> DATETIME </xsl:when>
+						<xsl:when test="(.)='fecha'"> DATE </xsl:when>
+						<xsl:otherwise> tipo invalido  </xsl:otherwise></xsl:choose>
+					<xsl:if test="following-sibling::*">, </xsl:if>
+				</xsl:for-each>
+				<xsl:for-each select="*">
+					<xsl:if test="@primaria='si'">, primary key(
+									 
+						
+						<xsl:value-of select="name()"/>
+						)</xsl:if>
+				</xsl:for-each>);
+				
+				
+				<br/></xsl:for-each>
+			<xsl:for-each select="*">
+				<xsl:if test="@enlace='si'">
+					<xsl:for-each select="*">
+						<xsl:if test="@foranea='si'">
+							ALTER TABLE 
+							<xsl:value-of select="@padre"/>
+							ADD CONSTRAINT FK_<xsl:value-of select="name()"/>
+							FOREIGN KEY(
+							<xsl:value-of select="name()"/>
+							) REFERENCE	
+							<xsl:value-of select="@tablapadre"/>
+							(
+							
+							<xsl:choose>
+								<xsl:when test="@otronombre='si'">
+									<xsl:value-of select="@idoriginal"/></xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="name()"/>
+								</xsl:otherwise>
+							</xsl:choose>));
+							
+							<br/></xsl:if>
+					</xsl:for-each>
+				</xsl:if>
+			</xsl:for-each>
+
+			<xsl:for-each select="registros">
+				<xsl:for-each select="*">
+					INSERT INTO <xsl:value-of select="name()"/>
+					VALUES
+					('<xsl:for-each select="*">
+						<xsl:value-of select="(.)"/>
+						<xsl:if test="following-sibling::*">', '</xsl:if>
+					</xsl:for-each>');<br/>
+					
+				</xsl:for-each>
+				<br/>
+			</xsl:for-each>
+
+		</xsl:for-each>
+	</xsl:template>
+</xsl:stylesheet>
