@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datos>
+	<arbol n="100" nbarbol="Tiendas">
+		<atributo nbatributo="Tiendas">
+			<valor f="70" nbvalor="TiendaA">
+				<atributo>
+					<valor encendido="1" f="10" nbvalor="ProductoA"/>
+					<valor encendido="0" f="20" nbvalor="ProductoB"/>
+					<valor encendido="1" f="30" nbvalor="ProductoC"/>
+				</atributo>
+			</valor>
+			<valor f="30" nbvalor="TiendaB">
+				<atributo>
+					<valor encendido="0" f="50" nbvalor="PA"/>
+					<valor encendido="0" f="10" nbvalor="PB"/>
+					<valor encendido="0" f="40" nbvalor="PC"/>
+				</atributo>
+			</valor>
+		</atributo>
+	</arbol>
+</datos>
